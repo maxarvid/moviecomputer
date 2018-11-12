@@ -36,7 +36,7 @@ function ready(datapoints) {
   console.log('data is ', datapoints)
 
   // Giving the x position scale its domain
-  const computers = datapoints.map(d => d.computer)
+  var computers = datapoints.map(d => d.computer)
   xPositionScale.domain(computers)
 
   // Let's make some rectangles
@@ -51,22 +51,21 @@ function ready(datapoints) {
     })
     .attr('x', d => xPositionScale(d.computer))
     .attr('y', d => yPositionScale(d.appearance_count))
-    .attr('fill', 'lightgrey')
+    .attr('fill', 'none')
     .on('mouseover', function(d) {
-      // console.log(d.computer)
-      div
-        .transition()
-        .duration(200)
-        .style('opacity', 0.9)
-      div.html(`<p>${d.computer}<br>${d.appearance_count} appearances</p>`)
-        .style("left", (d3.event.pageX) + "px")    
-        .style("top", (d3.event.pageY - 50) + "px")
-    })
-    .on('mouseout', function(d) {
-      div.transition()
-        .duration(500)
-        .style('opacity', 0)
-    })
+        div
+          .transition()
+          .duration(200)
+          .style('opacity', 0.9)
+        div.html(`<p>${d.computer}<br>${d.appearance_count} appearances</p>`)
+          .style("left", (d3.event.pageX) + "px")    
+          .style("top", (d3.event.pageY - 50) + "px")
+      })
+      .on('mouseout', function(d) {
+        div.transition()
+          .duration(500)
+          .style('opacity', 0)
+      })
 
   svg
     .append('text')
@@ -76,6 +75,28 @@ function ready(datapoints) {
     .attr('font-size', 12)
     .attr('x', width * 0.5)
     .attr('y', height + 15)
+
+  d3.select('#intro-graph').on('stepin', () => {
+    svg
+      .selectAll('rect')
+      .transition()
+      .attr('fill', 'lightgrey')
+  })
+
+  d3.select('#importance').on('stepin', () => {
+    console.log('importance step triggered')
+    // rearranging the datapoints by importance
+    datapoints = datapoints.sort((a, b) => {
+    return a.mean_importance - b.mean_importance
+  })
+    computers = datapoints.map(d => d.computer)
+    xPositionScale.domain(computers)
+
+    svg
+      .selectAll('rect')
+      .transition()
+      .attr('x', d => xPositionScale(d.computer))
+  })
 
 
   const yAxis = d3
