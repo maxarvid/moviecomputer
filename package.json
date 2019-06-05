@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/maxarvid/moviecomputer#readme",
   "dependencies": {
-    "d3": "^5.7.0",
+    "d3": "^5.9.2",
     "enter-view": "^1.0.0",
-    "parcel": "^1.10.3"
+    "parcel": "^1.12.3"
   }
 }
