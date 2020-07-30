@@ -21,7 +21,7 @@
   "dependencies": {
     "d3": "^5.9.2",
     "enter-view": "^1.0.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.19",
     "parcel": "^1.12.4"
   }
 }
